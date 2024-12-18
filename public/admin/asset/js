@@ -1,0 +1,36 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Menyembunyikan kolom semester berikutnya saat halaman dimuat
+        $('#smt2-container').hide();
+        $('#smt3-container').hide();
+        // Sembunyikan semester lainnya
+        
+        // Event untuk smt1
+        $('#smt1').on('input', function() {
+            if ($(this).val() !== '') {
+                $('#smt2-container').show(); // Menampilkan smt2 jika smt1 diisi
+            } else {
+                $('#smt2-container').hide(); // Menyembunyikan smt2 jika smt1 kosong
+                $('#smt3-container').hide(); // Menyembunyikan smt3 jika smt1 kosong
+                // Sembunyikan semester lainnya sesuai urutan
+            }
+        });
+
+        // Event untuk smt2
+        $('#smt2').on('input', function() {
+            if ($(this).val() !== '') {
+                $('#smt3-container').show(); // Menampilkan smt3 jika smt2 diisi
+            } else {
+                $('#smt3-container').hide(); // Menyembunyikan smt3 jika smt2 kosong
+            }
+        });
+
+        // Event untuk smt3 (jika ada semester lainnya, tambahkan logika serupa)
+        // $('#smt3').on('input', function() {
+        //     if ($(this).val() !== '') {
+        //         // Menampilkan semester berikutnya
+        //     }
+        // });
+    });
+</script>
