@@ -69,14 +69,14 @@
                 <div class="form-group mt-1 mb-3">
                     <label for="jenis_kelamin">Jenis Kelamin</label><br>
                     <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="laki_laki" value="laki-laki"
-                            {{ old('jenis_kelamin') === 'laki-laki' ? 'checked' : '' }}>
-                        <label for="laki_laki" class="form-check-label">Laki-laki</label>
+                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="Laki_laki" value="Laki-laki"
+                            {{ old('jenis_kelamin') === 'Laki-laki' ? 'checked' : '' }}>
+                        <label for="Laki_laki" class="form-check-label">Laki-laki</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="perempuan" value="perempuan"
-                            {{ old('jenis_kelamin') === 'perempuan' ? 'checked' : '' }}>
-                        <label for="perempuan" class="form-check-label">Perempuan</label>
+                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="Perempuan" value="Perempuan"
+                            {{ old('jenis_kelamin') === 'Perempuan' ? 'checked' : '' }}>
+                        <label for="Perempuan" class="form-check-label">Perempuan</label>
                     </div>
                     <span class="text-danger">{{ $errors->first('jenis_kelamin') }}</span>
                 </div>

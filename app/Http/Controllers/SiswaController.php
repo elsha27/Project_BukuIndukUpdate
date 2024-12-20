@@ -107,9 +107,10 @@ class SiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(siswa $siswa)
+    public function show($id)
     {
-        //
+        $siswa = siswa::findOrFail($id);
+        return view('siswa_show', ['siswa' => $siswa]);
     }
 
     /**
@@ -135,7 +136,7 @@ class SiswaController extends Controller
             'tingkat_rombel' => 'required', // Umur harus berupa angka
             'umur' => 'required', // Umur harus berupa angka
             'status' => 'required | in:Aktif,Tidak Aktif', // Umur harus berupa angka
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan', // JK hanya laki-laki/perempuan
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan', // JK hanya laki-laki/perempuan
             'alamat' => 'nullable', // Alamat boleh kosong
             'no_hp' => 'nullable', // Alamat boleh kosong
             'kebutuhan _khusus' => 'nullable', // Alamat boleh kosong
@@ -161,27 +162,20 @@ class SiswaController extends Controller
         ]);
         $siswa = siswa::findOrFail($id); // tidak pakai new karena data sudah ada
         $siswa->fill($requestData);
-        //karena di validasi foto boleh null, maka perlu pengecekan apakah ada file foto yang di upload
-        //jika ada maka file foto lama di hapus dan diganti dengan file foto baru
-        if($request->hasFile('foto')) {  //cek apakah foto ada atau tidak
-            Storage::delete($siswa->foto);  //jika ada hapus foto
-            $siswa->foto = $request->file('foto')->store('public');
-        }elseif($request->hasFile('smt1')){
-            Storage::delete($siswa->smt1);  //jika ada hapus foto
-            $siswa->foto = $request->file('smt1')->store('public');
-        }elseif($request->hasFile('smt2')){
-            Storage::delete($siswa->smt2);  //jika ada hapus foto
-            $siswa->foto = $request->file('smt2')->store('public');
-        }elseif($request->hasFile('smt3')){
-            Storage::delete($siswa->smt3);  //jika ada hapus foto
-            $siswa->foto = $request->file('smt3')->store('public');
-        }elseif($request->hasFile('smt4')){
-            Storage::delete($siswa->smt4);  //jika ada hapus foto
-            $siswa->foto = $request->file('smt4')->store('public');
-        }elseif($request->hasFile('smt5')){
-            Storage::delete($siswa->smt5);  //jika ada hapus foto
-            $siswa->foto = $request->file('smt5')->store('public');
+
+        $fields = ['foto', 'smt1', 'smt2', 'smt3', 'smt4', 'smt5', 'smt6', 'smt7', 'smt8', 'smt9', 'smt10', 'smt11', 'smt12', 'ijazah'];
+
+        foreach ($fields as $field) {
+            if ($request->hasFile($field)) {
+                // Hapus file lama jika ada
+                if ($siswa->$field) {
+                    Storage::delete($siswa->$field);
+                }
+                // Simpan file baru
+                $siswa->$field = $request->file($field)->store('public');
+            }
         }
+
         $siswa->save(); //menyimpan data ke database
         flash('Data sudah diupdate')->success();
         return redirect('/siswa');
@@ -190,9 +184,12 @@ class SiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(siswa $siswa)
+    public function destroy($id)
     {
-        //
+        $siswa = siswa::findOrFail($id);
+        $siswa->delete();
+        flash('Data sudah dihapus')->success();
+        return back();
     }
 
     public function import(Request $request)

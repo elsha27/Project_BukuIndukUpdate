@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RombelController;
 use App\Http\Controllers\SiswaImportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,4 +10,5 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 
 route::resource('siswa',SiswaController::class);
+route::resource('rombel',RombelController::class);
 Route::post('siswaimport', SiswaImportController::class)->name('siswaimport.store');

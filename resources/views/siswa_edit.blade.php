@@ -81,17 +81,17 @@
                 <div class="form-group mt-1 mb-3">
                     <label for="jenis_kelamin">Jenis Kelamin</label><br>
                     <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="laki_laki" value="laki-laki"
+                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="Laki_laki" value="Laki-laki"
                             {{ old('jenis_kelamin') ?? $siswa->jenis_kelamin === 'Laki-laki' ? 'checked' : '' }}>
                         <!--old() untuk menganmbil data yang ada. pengecekkan (??) jika data tidak ada maka lanjut berikutnya
                                 apakah jenis kelamin pasien adalah Laki-laki, jika benar radio button ini akan ditandai checked.-->
-                        <label for="laki_laki" class="form-check-label">Laki-laki</label>
+                        <label for="Laki_laki" class="form-check-label">Laki-laki</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="perempuan"
-                            value="perempuan"
+                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="Perempuan"
+                            value="Perempuan"
                             {{ old('jenis_kelamin') ?? $siswa->jenis_kelamin === 'Perempuan' ? 'checked' : '' }}>
-                        <label for="perempuan" class="form-check-label">Perempuan</label>
+                        <label for="Perempuan" class="form-check-label">Perempuan</label>
                     </div>
                     <span class="text-danger">{{ $errors->first('jenis_kelamin') }}</span>
                 </div>
@@ -162,12 +162,83 @@
                 
                 @if ($siswa->smt2 || old('smt2'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
                     <div class="form-group mt-1 mb-3">
-                        <label for="smt3">Rapor Kelas 1, Semester 3 (pdf/doc/docx)</label>
+                        <label for="smt3">Rapor Kelas 2, Semester 1 (pdf/doc/docx)</label>
                         <input type="file" class="form-control @error('smt3') is-invalid @enderror" name="smt3">
                         <span class="text-danger">{{ $errors->first('smt3') }}</span>
                     </div>
                 @endif
-                
+
+                @if ($siswa->smt3 || old('smt3'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt4">Rapor Kelas 2, Semester 2 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt4') is-invalid @enderror" name="smt4">
+                        <span class="text-danger">{{ $errors->first('smt4') }}</span>
+                    </div>
+                @endif
+
+                @if ($siswa->smt4 || old('smt4'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt5">Rapor Kelas 3, Semester 1 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt5') is-invalid @enderror" name="smt5">
+                        <span class="text-danger">{{ $errors->first('smt5') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt5 || old('smt5'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt6">Rapor Kelas 3, Semester 2 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt6') is-invalid @enderror" name="smt6">
+                        <span class="text-danger">{{ $errors->first('smt6') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt6 || old('smt6'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt7">Rapor Kelas 4, Semester 1 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt7') is-invalid @enderror" name="smt7">
+                        <span class="text-danger">{{ $errors->first('smt7') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt7 || old('smt7'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt8">Rapor Kelas 4, Semester 2 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt8') is-invalid @enderror" name="smt8">
+                        <span class="text-danger">{{ $errors->first('smt8') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt8 || old('smt8'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt9">Rapor Kelas 5, Semester 1 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt9') is-invalid @enderror" name="smt9">
+                        <span class="text-danger">{{ $errors->first('smt9') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt9 || old('smt9'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt10">Rapor Kelas 5, Semester 2 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt10') is-invalid @enderror" name="smt10">
+                        <span class="text-danger">{{ $errors->first('smt10') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt10 || old('smt10'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt11">Rapor Kelas 6, Semester 1 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt11') is-invalid @enderror" name="smt11">
+                        <span class="text-danger">{{ $errors->first('smt11') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt11 || old('smt11'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="smt12">Rapor Kelas 6, Semester 2 (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('smt12') is-invalid @enderror" name="smt12">
+                        <span class="text-danger">{{ $errors->first('smt12') }}</span>
+                    </div>
+                @endif
+                @if ($siswa->smt12 || old('smt12'))  <!-- Menambahkan pengecekan apakah smt2 sudah ada -->
+                    <div class="form-group mt-1 mb-3">
+                        <label for="ijazah">Ijazah (pdf/doc/docx)</label>
+                        <input type="file" class="form-control @error('ijazah') is-invalid @enderror" name="ijazah">
+                        <span class="text-danger">{{ $errors->first('ijazah') }}</span>
+                    </div>
+                @endif
                 <button type="submit" class="btn btn-primary">UPDATE</button>
             </form>
         </div>

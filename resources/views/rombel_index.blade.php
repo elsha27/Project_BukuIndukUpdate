@@ -1,12 +1,12 @@
-@extends('layouts.app',['title' => 'Data Siswa'])
+@extends('layouts.app',['title' => 'Data Rombel'])
 @section('content')
     <div class="card">
-        <h5 class="card-header">Data Siswa</h5>
+        <h5 class="card-header">Data Rombongan Belajar</h5>
         <div class="card-body">
             <div class="row mb-3 mt-3">
                 <div class="col-md-6">
-                    <a href="/siswa/create" class="btn btn-primary btn">Tambah Siswa</a>
-                    <form action="/siswa" method="post" enctype="multipart/form-data">
+                    <a href="/rombel/create" class="btn btn-primary btn">Tambah Siswa</a>
+                    <form action="/rombel" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="file" name="file">
                         <input type="submit" name="Import">
@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($siswa as $item)
+                    @foreach ($rombel as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->nama }}</td>
@@ -49,7 +49,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {!! $siswa->links() !!}
+            {!! $rombel->links() !!}
         </div>
     </div>
 @endsection
