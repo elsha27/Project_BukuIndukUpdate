@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('rombels', function (Blueprint $table) {
             $table->id();
+            $table->integer('rombel_id')->unique;
             $table->string('nama_rombel');
             $table->integer('tingkat');
             $table->string('wali_kelas');
             $table->string('nama_ruangan');
             $table->string('semester');
             $table->string('tahun_ajaran');
-            $table->foreignId('nisn');
+            $table->foreignId('nisn')->nullable();
             $table->timestamps();
         });
     }

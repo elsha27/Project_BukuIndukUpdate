@@ -5,7 +5,7 @@
         <div class="card-body">
             <div class="row mb-3 mt-3">
                 <div class="col-md-6">
-                    <a href="/rombel/create" class="btn btn-primary btn">Tambah Siswa</a>
+                    <a href="/rombel/create" class="btn btn-primary btn">Tambah Rombel</a>
                     <form action="/rombel" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="file" name="file">
@@ -17,11 +17,12 @@
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>Nama Siswa</th>
-                        <th>NISN</th>
-                        <th>Tingkat-Rombel</th>
-                        <th>Status</th>
-                        <th>Jenis Kelamin</th>
+                        <th>Nama Rombel</th>
+                        <th>Tingkat</th>
+                        <th>Wali Kelas</th>
+                        <th>Nama Ruangan</th>
+                        <th>Semester</th>
+                        <th>Tahun Ajaran</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
@@ -29,17 +30,18 @@
                     @foreach ($rombel as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>{{ $item->nisn }}</td>
-                        <td>{{ $item->tingkat_rombel }}</td>
-                        <td>{{ $item->status }}</td>
-                        <td>{{ $item->jenis_kelamin }}</td>
+                        <td>{{ $item->nama_rombel }}</td>
+                        <td>{{ $item->tingkat }}</td>
+                        <td>{{ $item->wali_kelas }}</td>
+                        <td>{{ $item->nama_ruangan }}</td>
+                        <td>{{ $item->semester }}</td>
+                        <td>{{ $item->tahun_ajaran }}</td>
                         <td>
-                            <a href="/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm ml-2">Edit</a>
+                            <a href="/rombel/{{ $item->id }}/edit" class="btn btn-warning btn-sm ml-2">Edit</a>
                             <!-- link ke form siswa edit menyesuaikan id -->
-                            <form action="/siswa/{{ $item->id }}" method="POST" class="d-inline">
+                            <form action="/rombel/{{ $item->id }}" method="POST" class="d-inline">
                             <!-- form action sesuai dengan id yang diambil -->
-                            <a href="/siswa/{{ $item->id }}" class="btn btn-success btn-sm ml-2">Detail</a>
+                            <a href="/rombel/{{ $item->id }}" class="btn btn-success btn-sm ml-2">Detail</a>
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>

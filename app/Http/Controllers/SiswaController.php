@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\siswa;
+use App\Models\rombel;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoresiswaRequest;
 use App\Http\Requests\UpdatesiswaRequest;
+use App\Http\Controllers\RombelController;
 
 class SiswaController extends Controller
 {
@@ -46,12 +48,12 @@ class SiswaController extends Controller
             // Mengimpor data dari file Excel
             try {
                 Excel::import(new SiswaImport, $file); // Menggunakan import sesuai dengan class SiswaImport
+                $this->updateRombelRelations();
                 flash('Data berhasil diimpor dari file Excel.')->success();
             } catch (\Exception $e) {
                 flash('Terjadi kesalahan saat mengimpor data: ' . $e->getMessage())->error();
                 return redirect()->back();
             }
-
             return redirect('/siswa');
         }
 
@@ -62,7 +64,7 @@ class SiswaController extends Controller
             'nik' => 'required|unique:siswas,nik', // No pasien harus unik dan diisi
             'tempat_lahir' => 'required', // No pasien harus unik dan diisi
             'tanggal_lahir' => 'required', // No pasien harus unik dan diisi
-            'tingkat_rombel' => 'required', // Umur harus berupa angka
+            'rombel_id' => 'required|exists:rombels,id', // memastikan poli_id valid
             'umur' => 'required', // Umur harus berupa angka
             'status' => 'required | in:Aktif,Tidak Aktif', // Umur harus berupa angka
             'jenis_kelamin' => 'required|in:laki-laki,perempuan', // JK hanya laki-laki/perempuan
@@ -98,10 +100,6 @@ class SiswaController extends Controller
         // Menampilkan pesan sukses dan mengarahkan kembali ke halaman sebelumnya
         flash('Data berhasil disimpan.')->success();
         return redirect()->route('siswa.index');
-
-        // Excel::import(new SiswaImport, $request->file('file'));
-        // return redirect('/siswa');
-        // dd($request->file('file'));
     }
 
     /**
@@ -201,5 +199,22 @@ class SiswaController extends Controller
         Excel::import(new SiswaImport, $request->file('file'));
 
         return back()->with('success', 'Data siswa berhasil diimport!');
+    }
+
+    // Metode untuk memperbarui relasi rombel
+    private function updateRombelRelations()
+    {
+        $siswas = Siswa::all();
+
+        foreach ($siswas as $siswa) {
+            // Cari rombel_id berdasarkan data di tabel 'rombels'
+            $rombel = rombel::where('rombel_id', $siswa->rombel_id)->first();
+
+            if ($rombel) {
+                // Perbarui data siswa dengan rombel_id yang valid
+                $siswa->rombel_id = $rombel->rombel_id;
+                $siswa->save();
+            }
+        }
     }
 }

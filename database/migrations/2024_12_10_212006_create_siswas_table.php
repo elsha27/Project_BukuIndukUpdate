@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('no')->nullable();
             $table->string('nama')->nullable();
-            $table->string('nisn')->nullable();
+            $table->bigInteger('nisn')->nullable();
             $table->string('nik')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('nama_ayah')->nullable();
             $table->string('nama_ibu')->nullable();
             $table->string('nama_wali')->nullable();
+            $table->foreignId('rombel_id')->nullable();
             $table->timestamps();
         });
     }
