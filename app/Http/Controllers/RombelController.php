@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\guru;
+use App\Models\siswa;
 use App\Models\rombel;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorerombelRequest;
@@ -14,8 +16,9 @@ class RombelController extends Controller
      */
     public function index()
     {
-        $data['rombel'] = rombel::latest()->paginate(10);
-        return view('rombel_index', $data);
+        // Ambil semua data rombel dengan relasi guru
+    $rombel = Rombel::with('guru')->paginate(10);
+    return view('rombel_index', compact('rombel'));
     }
 
     /**
@@ -23,7 +26,11 @@ class RombelController extends Controller
      */
     public function create()
     {
-        return view('rombel_create');
+         // Ambil data rombel dan siswa berdasarkan ID
+         $guru = guru::all(); // Ambil semua data rombel
+ 
+         // Kirimkan data ke view
+         return view('rombel_create', compact('guru'));
     }
 
     /**
@@ -31,17 +38,17 @@ class RombelController extends Controller
      */
     public function store(Request $request)
     {
-         $requestData = $request->validate([
+        $requestData = $request->validate([
+            'rombel_id' => 'required|unique:rombels,rombel_id', // Nama minimal 3 karakter
             'nama_rombel' => 'required|min:3', // Nama minimal 3 karakter
             'tingkat' => 'required|numeric|between:1,6',
-            'wali_kelas' => 'required',
+            'nik' => 'required|exists:gurus,nik',
             'nama_ruangan' => 'required|min:3', // No pasien harus unik dan diisi
             'semester' => 'required | in:Ganjil,Genap', // Umur harus berupa angka
             'tahun_ajaran' => 'required|regex:/^\d{4}\/\d{4}$/',
         ]);
         $rombel = new rombel();
         $rombel->fill($requestData);
-        $rombel->rombel_id = 'Kelas ' . $request->tingkat . ' - ' . $request->nama_rombel;
         $rombel->save();
         flash('Data berhasil disimpan.')->success();
         return redirect()->route('rombel.index');
@@ -59,24 +66,51 @@ class RombelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(rombel $rombel)
+    public function edit($id)
     {
-        //
+        // Ambil data rombel dan siswa berdasarkan ID
+        $guru = guru::all(); // Ambil semua data rombel
+        $rombel = Rombel::findOrFail($id);
+        // Kirimkan data ke view
+        return view('rombel_edit', compact('rombel','guru'));
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdaterombelRequest $request, rombel $rombel)
+    public function update(Request $request, string $id)
     {
-        //
+        $requestData = $request->validate([
+            'rombel_id' => 'required|unique:rombels,rombel_id,' . $id . ',id',
+            'nama_rombel' => 'required|min:3', 
+            'tingkat' => 'required|numeric|between:1,6',
+            'nik' => 'required|exists:gurus,nik',
+            'nama_ruangan' => 'required|min:3', 
+            'semester' => 'required | in:Ganjil,Genap', 
+            'tahun_ajaran' => 'required|regex:/^\d{4}\/\d{4}$/',
+            'nisn' => 'nullable|array',
+        ]);
+        $rombel = rombel::findOrFail($id); 
+        $rombel->fill($requestData);
+        $rombel->save(); //menyimpan data ke database
+        flash('Data sudah diupdate')->success();
+        return redirect('/rombel');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(rombel $rombel)
+    public function destroy($id)
     {
-        //
+        $rombel = rombel::findOrFail($id);
+        if ($rombel->siswa()->exists()) {
+            flash('Data tidak bisa dihapus karena sudah ada siswa')->error();
+            return back();
+        }
+
+        $rombel->delete();
+        flash('Data sudah dihapus')->success();
+        return back();
     }
 }

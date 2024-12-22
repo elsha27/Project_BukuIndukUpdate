@@ -48,7 +48,6 @@ class SiswaController extends Controller
             // Mengimpor data dari file Excel
             try {
                 Excel::import(new SiswaImport, $file); // Menggunakan import sesuai dengan class SiswaImport
-                $this->updateRombelRelations();
                 flash('Data berhasil diimpor dari file Excel.')->success();
             } catch (\Exception $e) {
                 flash('Terjadi kesalahan saat mengimpor data: ' . $e->getMessage())->error();
@@ -116,9 +115,14 @@ class SiswaController extends Controller
      */
     public function edit(string $id)
     {
-        $data['siswa'] = siswa::findOrFail($id); //seperti mencari buku sesuai id di lemari
-        return view('siswa_edit', $data);
+        // Ambil data rombel dan siswa berdasarkan ID
+        $rombels = Rombel::all(); // Ambil semua data rombel
+        $siswa = Siswa::findOrFail($id); // Cari siswa berdasarkan ID
+
+        // Kirimkan data ke view
+        return view('siswa_edit', compact('rombels', 'siswa'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -126,23 +130,23 @@ class SiswaController extends Controller
     public function update(Request $request, string $id)
     {
         $requestData = $request->validate([
-            'nama' => 'required|min:3', // Nama minimal 3 karakter
-            'nisn' => 'required|unique:siswas,nisn,' . $id, // No pasien harus unik dan diisi
-            'nik' => 'required|unique:siswas,nik,' . $id, // No pasien harus unik dan diisi
-            'tempat_lahir' => 'required', // No pasien harus unik dan diisi
-            'tanggal_lahir' => 'required', // No pasien harus unik dan diisi
-            'tingkat_rombel' => 'required', // Umur harus berupa angka
-            'umur' => 'required', // Umur harus berupa angka
-            'status' => 'required | in:Aktif,Tidak Aktif', // Umur harus berupa angka
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan', // JK hanya laki-laki/perempuan
-            'alamat' => 'nullable', // Alamat boleh kosong
-            'no_hp' => 'nullable', // Alamat boleh kosong
-            'kebutuhan _khusus' => 'nullable', // Alamat boleh kosong
-            'disabilitas' => 'nullable', // Alamat boleh kosong
-            'nomor_kip' => 'nullable', // Alamat boleh kosong
-            'nama_ayah' => 'required', // Alamat boleh kosong
-            'nama_ibu' => 'required', // Alamat boleh kosong
-            'nama_wali' => 'required', // Alamat boleh kosong
+            'nama' => 'required|min:3', 
+            'nisn' => 'required|unique:siswas,nisn,' . $id, 
+            'nik' => 'required|unique:siswas,nik,' . $id,
+            'tempat_lahir' => 'required', 
+            'tanggal_lahir' => 'required', 
+            'tingkat_rombel' => 'required',
+            'umur' => 'required', 
+            'status' => 'required | in:Aktif,Tidak Aktif', 
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan', 
+            'alamat' => 'nullable', 
+            'no_hp' => 'nullable', 
+            'kebutuhan _khusus' => 'nullable', 
+            'disabilitas' => 'nullable', 
+            'nomor_kip' => 'nullable', 
+            'nama_ayah' => 'required', 
+            'nama_ibu' => 'required', 
+            'nama_wali' => 'required', 
             'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:5000',
             'smt1' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'smt2' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
@@ -157,8 +161,9 @@ class SiswaController extends Controller
             'smt11' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'smt12' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'ijazah' => 'nullable|file|mimes:pdf,doc,docx,jpeg,jpg,png|max:5000',
+            'rombel_id' => 'required|exists:rombels,id', 
         ]);
-        $siswa = siswa::findOrFail($id); // tidak pakai new karena data sudah ada
+        $siswa = siswa::findOrFail($id); 
         $siswa->fill($requestData);
 
         $fields = ['foto', 'smt1', 'smt2', 'smt3', 'smt4', 'smt5', 'smt6', 'smt7', 'smt8', 'smt9', 'smt10', 'smt11', 'smt12', 'ijazah'];
@@ -202,19 +207,19 @@ class SiswaController extends Controller
     }
 
     // Metode untuk memperbarui relasi rombel
-    private function updateRombelRelations()
-    {
-        $siswas = Siswa::all();
+    // private function updateRombelRelations()
+    // {
+    //     $siswas = Siswa::all();
 
-        foreach ($siswas as $siswa) {
-            // Cari rombel_id berdasarkan data di tabel 'rombels'
-            $rombel = rombel::where('rombel_id', $siswa->rombel_id)->first();
+    //     foreach ($siswas as $siswa) {
+    //         // Cari rombel_id berdasarkan data di tabel 'rombels'
+    //         $rombel = rombel::where('rombel_id', $siswa->rombel_id)->first();
 
-            if ($rombel) {
-                // Perbarui data siswa dengan rombel_id yang valid
-                $siswa->rombel_id = $rombel->rombel_id;
-                $siswa->save();
-            }
-        }
-    }
+    //         if ($rombel) {
+    //             // Perbarui data siswa dengan rombel_id yang valid
+    //             $siswa->rombel_id = $rombel->rombel_id;
+    //             $siswa->save();
+    //         }
+    //     }
+    // }
 }

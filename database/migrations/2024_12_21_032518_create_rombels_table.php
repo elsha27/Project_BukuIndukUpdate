@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('rombel_id')->unique;
             $table->string('nama_rombel');
             $table->integer('tingkat');
-            $table->string('wali_kelas');
+            $table->foreignId('nik');
             $table->string('nama_ruangan');
             $table->string('semester');
             $table->string('tahun_ajaran');

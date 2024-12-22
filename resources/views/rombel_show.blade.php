@@ -18,7 +18,7 @@
                                 </tr>
                                 <tr>
                                     <th>Wali Kelas</th>
-                                    <td> : {{ $rombel->wali_kelas }}</td>
+                                    <td> : {{ $rombel->nik }}</td>
                                 </tr>
                                 <tr>
                                     <th>Nama Ruangan</th>

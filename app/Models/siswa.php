@@ -12,6 +12,6 @@ class siswa extends Model
     protected $guarded = [];
     public function rombel(): BelongsTo
     {
-        return $this->belongsTo(Rombel::class, 'tingkat_rombel');
+        return $this->belongsTo(rombel::class)->withDefault();
     }
 }

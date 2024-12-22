@@ -11,6 +11,10 @@ class rombel extends Model
     use HasFactory;
     protected $guarded = [];
     public function siswa(): HasMany{
-        return $this->hasMany(Siswa::class, 'tingkat_rombel'); // Kolom 'tingkat_rombel' adalah foreign key di tabel siswas
+        return $this->hasMany(siswa::class);
+    }
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'nik', 'nik'); // Pastikan foreign key 'nik' sesuai dengan tabel 'gurus'
     }
 }

@@ -65,15 +65,11 @@
                     <div class="form-check form-check-inline">
                         <input type="radio" class="form-check-input" name="status" id="Aktif" value="Aktif"
                             {{ old('status') ?? $siswa->status === 'Aktif' ? 'checked' : '' }}>
-                        <!--old() untuk menganmbil data yang ada. pengecekkan (??) jika data tidak ada maka lanjut berikutnya
-                                apakah jenis kelamin pasien adalah Laki-laki, jika benar radio button ini akan ditandai checked.-->
                         <label for="Aktif" class="form-check-label">Aktif</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input type="radio" class="form-check-input" name="status" id="Tidak Aktif" value="Tidak Aktif"
                             {{ old('status') ?? $siswa->status === 'Tidak Aktif' ? 'checked' : '' }}>
-                        <!--old() untuk menganmbil data yang ada. pengecekkan (??) jika data tidak ada maka lanjut berikutnya
-                                apakah jenis kelamin pasien adalah Laki-laki, jika benar radio button ini akan ditandai checked.-->
                         <label for="Tidak Aktif" class="form-check-label">Tidak Aktif</label>
                     </div>
                     <span class="text-danger">{{ $errors->first('status') }}</span>
@@ -83,8 +79,6 @@
                     <div class="form-check form-check-inline">
                         <input type="radio" class="form-check-input" name="jenis_kelamin" id="Laki_laki" value="Laki-laki"
                             {{ old('jenis_kelamin') ?? $siswa->jenis_kelamin === 'Laki-laki' ? 'checked' : '' }}>
-                        <!--old() untuk menganmbil data yang ada. pengecekkan (??) jika data tidak ada maka lanjut berikutnya
-                                apakah jenis kelamin pasien adalah Laki-laki, jika benar radio button ini akan ditandai checked.-->
                         <label for="Laki_laki" class="form-check-label">Laki-laki</label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -143,6 +137,20 @@
                     <input type="text" class="form-control @error('nama_wali') is-invalid @enderror" id="nama_wali"
                         name="nama_wali" value="{{ old('nama_wali') ?? $siswa->nama_wali }}">
                     <span class="text-danger">{{ $errors->first('nama_wali') }}</span>
+                </div>
+                <div class="form-group mt-1 mb-3">
+                    <label for="rombel_id">Nama Rombel
+                        <a href="/rombel/create" target="blank">Buat Rombel Baru</a>
+                    </label>
+                    <select name="rombel_id" class="form-control select2" data-placeholder="Cari Rombel....">
+                        <option value="">-- Pilih Rombel --</option>
+                        @foreach ($rombels as $item)
+                            <option value="{{ $item->id }}" @selected(old('rombel_id') == $item->id)>
+                                {{ $item->rombel_id }} - {{ $item->nama_rombel }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span class="text-danger">{{ $errors->first('rombel_id') }}</span>
                 </div>
                 <div class="form-group mt-1 mb-3">
                     <label for="smt1">Rapor Kelas 1, Semester 1 (pdf/doc/docx)</label>
