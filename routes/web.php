@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\SkGuruController;
 use Illuminate\Auth\Middleware\Authenticate;
 
 
 route::resource('siswa',SiswaController::class);
 route::resource('rombel',RombelController::class);
 route::resource('guru',GuruController::class);
+route::resource('skguru',SkGuruController::class);
 Route::post('siswaimport', SiswaImportController::class)->name('siswaimport.store');
+
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

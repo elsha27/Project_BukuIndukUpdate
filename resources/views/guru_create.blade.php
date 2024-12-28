@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Tambah Guru'])
+@extends('layouts.app_sneat', ['title' => 'Tambah Guru'])
 @section('content')
     <div class="card">
         <h5 class="card-header">Tambah Data Guru</h5>
@@ -124,17 +124,7 @@
                     <span class="text-danger">{{ $errors->first('ijazah_s2') }}</span>
                 </div>
                 <div class="form-group mt-1 mb-3">
-                    <label for="sk_yayasan">SK Yayasan (pdf/doc/docx)</label>
-                    <input type="file" class="form-control @error('sk_yayasan') is-invalid @enderror" name="sk_yayasan">
-                    <span class="text-danger">{{ $errors->first('sk_yayasan') }}</span>
-                </div>
-                <div class="form-group mt-1 mb-3">
-                    <label for="sk_tugas">SK Tugas (pdf/doc/docx)</label>
-                    <input type="file" class="form-control @error('sk_tugas') is-invalid @enderror" name="sk_tugas">
-                    <span class="text-danger">{{ $errors->first('sk_tugas') }}</span>
-                </div>
-                <div class="form-group mt-1 mb-3">
-                    <label for="kartukeluarga">SK Tugas (pdf/doc/docx)</label>
+                    <label for="kartukeluarga">Kartu Keluarga (pdf/doc/docx)</label>
                     <input type="file" class="form-control @error('kartukeluarga') is-invalid @enderror" name="kartukeluarga">
                     <span class="text-danger">{{ $errors->first('kartukeluarga') }}</span>
                 </div>

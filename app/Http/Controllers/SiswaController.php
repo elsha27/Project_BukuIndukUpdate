@@ -58,24 +58,24 @@ class SiswaController extends Controller
 
         // Jika input manual, lakukan validasi
         $requestData = $request->validate([
-            'nama' => 'required|min:3', // Nama minimal 3 karakter
-            'nisn' => 'required|unique:siswas,nisn', // No pasien harus unik dan diisi
-            'nik' => 'required|unique:siswas,nik', // No pasien harus unik dan diisi
-            'tempat_lahir' => 'required', // No pasien harus unik dan diisi
-            'tanggal_lahir' => 'required', // No pasien harus unik dan diisi
-            'rombel_id' => 'required|exists:rombels,id', // memastikan poli_id valid
-            'umur' => 'required', // Umur harus berupa angka
-            'status' => 'required | in:Aktif,Tidak Aktif', // Umur harus berupa angka
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan', // JK hanya laki-laki/perempuan
-            'alamat' => 'nullable', // Alamat boleh kosong
-            'no_hp' => 'nullable', // Alamat boleh kosong
-            'kebutuhan _khusus' => 'nullable', // Alamat boleh kosong
-            'disabilitas' => 'nullable', // Alamat boleh kosong
-            'nomor_kip' => 'nullable', // Alamat boleh kosong
-            'nama_ayah' => 'required', // Alamat boleh kosong
-            'nama_ibu' => 'required', // Alamat boleh kosong
-            'nama_wali' => 'required', // Alamat boleh kosong
-            'foto' => 'required|image|mimes:jpeg,jpg,png|max:5000', // Foto harus berupa gambar dengan format dan ukuran tertentu
+            'nama' => 'required|min:3', 
+            'nisn' => 'required|unique:siswas,nisn', 
+            'nik' => 'required|unique:siswas,nik', 
+            'tempat_lahir' => 'required', 
+            'tanggal_lahir' => 'required', 
+            'rombel_id' => 'required|exists:rombels,id',
+            'umur' => 'required',
+            'status' => 'required | in:Aktif,Tidak Aktif', 
+            'jenis_kelamin' => 'required|in:laki-laki,perempuan', 
+            'alamat' => 'nullable', 
+            'no_hp' => 'nullable', 
+            'kebutuhan _khusus' => 'nullable', 
+            'disabilitas' => 'nullable', 
+            'nomor_kip' => 'nullable', 
+            'nama_ayah' => 'required', 
+            'nama_ibu' => 'required', 
+            'nama_wali' => 'required', 
+            'foto' => 'required|image|mimes:jpeg,jpg,png|max:5000', 
 
         ]);
 

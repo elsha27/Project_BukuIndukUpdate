@@ -11,6 +11,10 @@ class guru extends Model
     protected $guarded = [];
     public function rombel()
     {
-        return $this->hasOne(Rombel::class);
+        return $this->hasOne(Rombel::class, 'nik', 'nik'); 
+    }
+    public function sk()
+    {
+        return $this->hasMany(Sk_guru::class, 'nik', 'nik'); // Menyesuaikan relasi dengan kolom nik
     }
 }

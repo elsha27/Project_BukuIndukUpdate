@@ -1,4 +1,4 @@
-@extends('layouts.app',['title' => 'Data Guru'])
+@extends('layouts.app_sneat',['title' => 'Data Guru'])
 @section('content')
     <div class="card">
         <h5 class="card-header">Data Guru</h5>

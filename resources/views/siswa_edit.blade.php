@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Edit Data Siswa'])
+@extends('layouts.app_sneat', ['title' => 'Edit Data Siswa'])
 @section('content')
     <div class="card">
         <h5 class="card-header">Edit Data Siswa : <b>{{ strtoupper($siswa->nama) }}</b></h5>

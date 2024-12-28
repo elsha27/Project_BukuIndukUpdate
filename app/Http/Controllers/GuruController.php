@@ -33,18 +33,18 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $requestData = $request->validate([
-            'nik' => 'required|unique:gurus,nik|digits:16', 
-            'nama_guru' => 'required|min:3', 
+            'nik' => 'required|unique:gurus,nik|digits:16',
+            'nama_guru' => 'required|min:3',
             'nuptk' => 'nullable|numeric',
             'status_kepegawaian' => 'required | in:PNS,Non PNS',
             'nip' => 'nullable|numeric',
             'jenis_kelamin' => 'required | in:Laki-laki,Perempuan',
-            'tempat_lahir' => 'required', 
-            'tanggal_lahir' => 'required', 
-            'no_hp' => 'required|numeric', 
-            'email' => 'required|email', 
-            'mapel' => 'required', 
-            'total_jtm' => 'required|numeric', 
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'no_hp' => 'required|numeric',
+            'email' => 'required|email',
+            'mapel' => 'required',
+            'total_jtm' => 'required|numeric',
             'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:5000',
             'ijazah_sd' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'ijazah_smp' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
@@ -58,7 +58,7 @@ class GuruController extends Controller
         ]);
         $guru = new guru();
         $guru->fill($requestData);
-        $fields = ['foto','ijazah_sd','ijazah_smp','ijazah_sma','ijazah_s1','ijazah_s2','sk_yayasan','sk_tugas','kartukeluarga','ktp'];
+        $fields = ['foto', 'ijazah_sd', 'ijazah_smp', 'ijazah_sma', 'ijazah_s1', 'ijazah_s2', 'sk_yayasan', 'sk_tugas', 'kartukeluarga', 'ktp'];
         foreach ($fields as $field) {
             if ($request->hasFile($field)) {
                 // Simpan file baru
@@ -73,9 +73,14 @@ class GuruController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(guru $guru)
+    public function show($id)
     {
-        //
+        $guru = guru::findOrFail($id);
+        // Ambil semua SK yang dimiliki oleh guru
+        $skGurus = $guru->sk;
+
+        // Kirimkan data guru dan SK ke view
+        return view('guru_show', compact('guru', 'skGurus'));
     }
 
     /**
@@ -94,17 +99,18 @@ class GuruController extends Controller
     {
         $requestData = $request->validate([
             'nik' => 'required|digits:16|unique:gurus,nik,' . $id,
-            'nama_guru' => 'required|min:3', 
+            'nama_guru' => 'required|min:3',
             'nuptk' => 'nullable|numeric',
             'status_kepegawaian' => 'required | in:PNS,Non PNS',
             'nip' => 'nullable|numeric',
             'jenis_kelamin' => 'required | in:Laki-laki,Perempuan',
-            'tempat_lahir' => 'required', 
-            'tanggal_lahir' => 'required', 
-            'no_hp' => 'required|numeric', 
-            'email' => 'required|email', 
-            'mapel' => 'required', 
-            'total_jtm' => 'required|numeric', 
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'no_hp' => 'required|numeric',
+            'email' => 'required|email',
+            'mapel' => 'required',
+            'total_jtm' => 'required|numeric',
+            'status' => 'required | in:Aktif,Tidak Aktif',
             'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:5000',
             'ijazah_sd' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'ijazah_smp' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
@@ -114,9 +120,9 @@ class GuruController extends Controller
             'kartukeluarga' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'ktp' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
         ]);
-        $guru = guru::findOrFail($id); 
+        $guru = guru::findOrFail($id);
         $guru->fill($requestData);
-        $fields = ['foto','ijazah_sd','ijazah_smp','ijazah_sma','ijazah_s1','ijazah_s2','sk_yayasan','sk_tugas','kartukeluarga','ktp'];
+        $fields = ['foto', 'ijazah_sd', 'ijazah_smp', 'ijazah_sma', 'ijazah_s1', 'ijazah_s2', 'kartukeluarga', 'ktp'];
 
         foreach ($fields as $field) {
             if ($request->hasFile($field)) {
@@ -136,8 +142,16 @@ class GuruController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(guru $guru)
+    public function destroy($id)
     {
-        //
+        $guru = guru::findOrFail($id);
+        if ($guru->rombel()->exists()) {
+            flash('Data tidak bisa dihapus karena sudah ada siswa')->error();
+            return back();
+        }
+
+        $guru->delete();
+        flash('Data sudah dihapus')->success();
+        return back();
     }
 }

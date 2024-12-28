@@ -25,14 +25,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mapel');
             $table->integer('total_jtm');
+            $table->enum('status',['Aktif','Tidak Aktif']);
             $table->string('foto')->nullable();
             $table->string('ijazah_sd')->nullable();
             $table->string('ijazah_smp')->nullable();
             $table->string('ijazah_sma')->nullable();
             $table->string('ijazah_s1')->nullable();
             $table->string('ijazah_s2')->nullable();
-            $table->string('sk_yayasan')->nullable();
-            $table->string('sk_tugas')->nullable();
+            $table->foreignId('sk_id')->nullable();
             $table->string('kartukeluarga')->nullable();
             $table->string('ktp')->nullable();
             $table->timestamps();

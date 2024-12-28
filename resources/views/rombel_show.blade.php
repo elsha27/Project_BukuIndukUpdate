@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Detail Data Rombel'])
+@extends('layouts.app_sneat', ['title' => 'Detail Data Rombel'])
 @section('content')
     <div class="container">
         <div class="row justify-content-center">

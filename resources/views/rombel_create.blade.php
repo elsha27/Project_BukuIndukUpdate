@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Tambah Rombel'])
+@extends('layouts.app_sneat', ['title' => 'Tambah Rombel'])
 @section('content')
     <div class="card">
         <h5 class="card-header">Tambah Data Rombel</h5>
