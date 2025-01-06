@@ -32,7 +32,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->nama_rombel }}</td>
                         <td>{{ $item->tingkat }}</td>
-                        <td>{{ $item->nik }}</td>
+                        <td>{{ $item->guru->nama_guru ?? 'Nama Guru Tidak Ditemukan' }}</td> <!-- Menampilkan nama guru -->
                         <td>{{ $item->nama_ruangan }}</td>
                         <td>{{ $item->semester }}</td>
                         <td>{{ $item->tahun_ajaran }}</td>
@@ -51,7 +51,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {!! $rombel->links() !!}
+            {{-- {!! $rombel->links() !!} --}}
         </div>
     </div>
 @endsection

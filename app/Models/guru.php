@@ -11,7 +11,7 @@ class guru extends Model
     protected $guarded = [];
     public function rombel()
     {
-        return $this->hasOne(Rombel::class, 'nik', 'nik'); 
+        return $this->hasMany(Rombel::class, 'nik', 'nik'); // Relasi 'hasMany' berarti Guru dapat memiliki banyak Rombel
     }
     public function sk()
     {

@@ -15,6 +15,6 @@ class rombel extends Model
     }
     public function guru()
     {
-        return $this->belongsTo(Guru::class, 'nik', 'nik'); // Pastikan foreign key 'nik' sesuai dengan tabel 'gurus'
+        return $this->belongsTo(Guru::class, 'nik', 'nik'); // Relasi 'belongsTo' berarti Rombel berhubungan dengan satu Guru
     }
 }

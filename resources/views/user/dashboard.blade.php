@@ -20,75 +20,75 @@
 
                             </div>
                             <div class="row">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <i class="menu-icon tf-icons bx bx-user-check" style="font-size: 45px;"></i>
-                                                        </div>
-                                                    </div>
-                                                    <span>Siswa Aktif</span>
-                                                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Aktif</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                
-                                        <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                                        <div class="avatar flex-shrink-0">
-                                                            
-                                                            <i class="menu-icon tf-icons bx bx-user-plus" style="font-size: 45px;"></i>
-                                                        </div>
-                                                    </div>
-                                                    <span>Siswa Lulus</span>
-                                                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Lulus</small>
-                                                </div>
-                                            </div>
-                                        </div>
+                              <div class="container">
+                                  <div class="row">
+                                      <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
+                                          <div class="card">
+                                              <div class="card-body">
+                                                  <div class="card-title d-flex align-items-start justify-content-between">
+                                                      <div class="avatar flex-shrink-0">
+                                                          <i class="menu-icon tf-icons bx bx-user-check" style="font-size: 45px;"></i>
+                                                      </div>
+                                                  </div>
+                                                  <span>Siswa Aktif</span>
+                                                  <h3 class="card-title text-nowrap mb-1">{{ \App\Models\Siswa::where('status', 'Aktif')->count() }}</h3>
+                                                  <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Aktif</small>
+                                              </div>
+                                          </div>
+                                      </div>
+                              
+                                      <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
+                                          <div class="card">
+                                              <div class="card-body">
+                                                  <div class="card-title d-flex align-items-start justify-content-between">
+                                                      <div class="avatar flex-shrink-0">
+                                                          
+                                                          <i class="menu-icon tf-icons bx bx-user-plus" style="font-size: 45px;"></i>
+                                                      </div>
+                                                  </div>
+                                                  <span>Siswa Lulus</span>
+                                                  <h3 class="card-title text-nowrap mb-1">{{ \App\Models\Siswa::where('status', 'Lulus')->count() }}</h3>
+                                                  <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Lulus</small>
+                                              </div>
+                                          </div>
+                                      </div>
 
-                                        <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <i class="menu-icon tf-icons bx bx-user-minus" style="font-size: 45px;"></i>
-                                                        </div>
-                                                    </div>
-                                                    <span>Siswa Pindah</span>
-                                                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Pindah</small>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
+                                          <div class="card">
+                                              <div class="card-body">
+                                                  <div class="card-title d-flex align-items-start justify-content-between">
+                                                      <div class="avatar flex-shrink-0">
+                                                          <i class="menu-icon tf-icons bx bx-user-minus" style="font-size: 45px;"></i>
+                                                      </div>
+                                                  </div>
+                                                  <span>Siswa Pindah</span>
+                                                  <h3 class="card-title text-nowrap mb-1">{{ \App\Models\Siswa::where('status', 'Pindah')->count() }}</h3>
+                                                  <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Pindah</small>
+                                              </div>
+                                          </div>
+                                      </div>
 
-                                        <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <i class="menu-icon tf-icons bx bx-user-x" style="font-size: 45px;"></i>
-                                                        </div>
-                                                    </div>
-                                                    <span>Siswa Nonaktif</span>
-                                                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Nonaktif</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                      <div class="col-lg-2 col-md-12 col-6 mb-4" style="margin: 5px;">
+                                          <div class="card">
+                                              <div class="card-body">
+                                                  <div class="card-title d-flex align-items-start justify-content-between">
+                                                      <div class="avatar flex-shrink-0">
+                                                          <i class="menu-icon tf-icons bx bx-user-x" style="font-size: 45px;"></i>
+                                                      </div>
+                                                  </div>
+                                                  <span>Siswa Nonaktif</span>
+                                                  <h3 class="card-title text-nowrap mb-1"> {{ \App\Models\Siswa::where('status', 'Nonaktif')->count() }}</h3>
+                                                  <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Nonaktif</small>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                                 
                                 
                                 <div class="col-sm-50 text-end">
 
-                                        <img src="sneat/assets/img/illustrations/man-with-laptop-light.png" height="180"
+                                        <img src="../sneat/assets/img/illustrations/man-with-laptop-light.png" height="180"
                                             alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png"
                                             data-app-light-img="illustrations/man-with-laptop-light.png" />
                                     </div>

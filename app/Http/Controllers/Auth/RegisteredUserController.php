@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -39,12 +39,18 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Logout user yang baru saja login
+        Auth::logout();
 
-        return redirect(route('dashboard', absolute: false));
+        // Tambahkan pesan flash (jika Anda menggunakan package flash)
+        session()->flash('success', 'Register berhasil! Silakan login.');
+
+        // Redirect ke halaman login
+        return redirect()->route('login');
     }
 }

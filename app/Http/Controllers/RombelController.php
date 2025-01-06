@@ -18,7 +18,7 @@ class RombelController extends Controller
     public function index()
     {
         // Ambil semua data rombel dengan relasi guru
-    $rombel = Rombel::with('guru')->paginate(10);
+    $rombel = Rombel::with('guru')->get();
     if (Auth::check()) {
         if (Auth::user()->role == 'user') {
             return view('user.rombel_index', compact('rombel'));
