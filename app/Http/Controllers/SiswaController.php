@@ -6,6 +6,7 @@ use App\Models\siswa;
 use App\Models\rombel;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoresiswaRequest;
@@ -21,7 +22,14 @@ class SiswaController extends Controller
     public function index()
     {
         $data['siswa'] = siswa::latest()->paginate(10);
-        return view('siswa_index', $data);
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
+                return view('user.siswa_index', $data);
+            } elseif (Auth::user()->role == 'admin') {
+                return view('admin.siswa_index', $data);
+            }
+        }
+        return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
     }
 
     /**
@@ -29,7 +37,14 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view('siswa_create');
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
+                return view('user.siswa_create');
+            } elseif (Auth::user()->role == 'admin') {
+                return view('admin.siswa_create');
+            }
+        }
+        return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
     }
 
     /**
@@ -53,29 +68,29 @@ class SiswaController extends Controller
                 flash('Terjadi kesalahan saat mengimpor data: ' . $e->getMessage())->error();
                 return redirect()->back();
             }
-            return redirect('/siswa');
+            return redirect('/admin/siswa');
         }
 
         // Jika input manual, lakukan validasi
         $requestData = $request->validate([
-            'nama' => 'required|min:3', 
-            'nisn' => 'required|unique:siswas,nisn', 
-            'nik' => 'required|unique:siswas,nik', 
-            'tempat_lahir' => 'required', 
-            'tanggal_lahir' => 'required', 
+            'nama' => 'required|min:3',
+            'nisn' => 'required|unique:siswas,nisn',
+            'nik' => 'required|unique:siswas,nik',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
             'rombel_id' => 'required|exists:rombels,id',
             'umur' => 'required',
-            'status' => 'required | in:Aktif,Tidak Aktif', 
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan', 
-            'alamat' => 'nullable', 
-            'no_hp' => 'nullable', 
-            'kebutuhan _khusus' => 'nullable', 
-            'disabilitas' => 'nullable', 
-            'nomor_kip' => 'nullable', 
-            'nama_ayah' => 'required', 
-            'nama_ibu' => 'required', 
-            'nama_wali' => 'required', 
-            'foto' => 'required|image|mimes:jpeg,jpg,png|max:5000', 
+            'status' => 'required | in:Aktif,Nonaktif,Lulus,Pindah',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'alamat' => 'nullable',
+            'no_hp' => 'nullable',
+            'kebutuhan _khusus' => 'nullable',
+            'disabilitas' => 'nullable',
+            'nomor_kip' => 'nullable',
+            'nama_ayah' => 'required',
+            'nama_ibu' => 'required',
+            'nama_wali' => 'required',
+            'foto' => 'required|image|mimes:jpeg,jpg,png|max:5000',
 
         ]);
 
@@ -98,7 +113,7 @@ class SiswaController extends Controller
 
         // Menampilkan pesan sukses dan mengarahkan kembali ke halaman sebelumnya
         flash('Data berhasil disimpan.')->success();
-        return redirect()->route('siswa.index');
+        return redirect()->route('admin.siswa_index');
     }
 
     /**
@@ -107,7 +122,14 @@ class SiswaController extends Controller
     public function show($id)
     {
         $siswa = siswa::findOrFail($id);
-        return view('siswa_show', ['siswa' => $siswa]);
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
+                return view('user.siswa_show', ['siswa' => $siswa]);
+            } elseif (Auth::user()->role == 'admin') {
+                return view('admin.siswa_show', ['siswa' => $siswa]);
+            }
+        }
+        return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
     }
 
     /**
@@ -119,8 +141,14 @@ class SiswaController extends Controller
         $rombels = Rombel::all(); // Ambil semua data rombel
         $siswa = Siswa::findOrFail($id); // Cari siswa berdasarkan ID
 
-        // Kirimkan data ke view
-        return view('siswa_edit', compact('rombels', 'siswa'));
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
+                return view('user.siswa_edit', compact('rombels', 'siswa'));
+            } elseif (Auth::user()->role == 'admin') {
+                return view('admin.siswa_edit', compact('rombels', 'siswa'));
+            }
+        }
+        return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
     }
 
 
@@ -130,23 +158,23 @@ class SiswaController extends Controller
     public function update(Request $request, string $id)
     {
         $requestData = $request->validate([
-            'nama' => 'required|min:3', 
-            'nisn' => 'required|unique:siswas,nisn,' . $id, 
+            'nama' => 'required|min:3',
+            'nisn' => 'required|unique:siswas,nisn,' . $id,
             'nik' => 'required|unique:siswas,nik,' . $id,
-            'tempat_lahir' => 'required', 
-            'tanggal_lahir' => 'required', 
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
             'tingkat_rombel' => 'required',
-            'umur' => 'required', 
-            'status' => 'required | in:Aktif,Tidak Aktif', 
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan', 
-            'alamat' => 'nullable', 
-            'no_hp' => 'nullable', 
-            'kebutuhan _khusus' => 'nullable', 
-            'disabilitas' => 'nullable', 
-            'nomor_kip' => 'nullable', 
-            'nama_ayah' => 'required', 
-            'nama_ibu' => 'required', 
-            'nama_wali' => 'required', 
+            'umur' => 'required',
+            'status' => 'nullable | in:Aktif,Nonaktif,Lulus,Pindah',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'alamat' => 'nullable',
+            'no_hp' => 'nullable',
+            'kebutuhan _khusus' => 'nullable',
+            'disabilitas' => 'nullable',
+            'nomor_kip' => 'nullable',
+            'nama_ayah' => 'required',
+            'nama_ibu' => 'required',
+            'nama_wali' => 'required',
             'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:5000',
             'smt1' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'smt2' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
@@ -161,9 +189,9 @@ class SiswaController extends Controller
             'smt11' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'smt12' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'ijazah' => 'nullable|file|mimes:pdf,doc,docx,jpeg,jpg,png|max:5000',
-            'rombel_id' => 'required|exists:rombels,id', 
+            'rombel_id' => 'nullable|exists:rombels,id',
         ]);
-        $siswa = siswa::findOrFail($id); 
+        $siswa = siswa::findOrFail($id);
         $siswa->fill($requestData);
 
         $fields = ['foto', 'smt1', 'smt2', 'smt3', 'smt4', 'smt5', 'smt6', 'smt7', 'smt8', 'smt9', 'smt10', 'smt11', 'smt12', 'ijazah'];
@@ -181,7 +209,8 @@ class SiswaController extends Controller
 
         $siswa->save(); //menyimpan data ke database
         flash('Data sudah diupdate')->success();
-        return redirect('/siswa');
+        return redirect()->route('siswa.index');
+
     }
 
     /**

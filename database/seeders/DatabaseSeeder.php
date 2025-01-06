@@ -13,17 +13,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'role' => 'admin',
+            'password' => bcrypt('admin'),
+        ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        // \App\Models\Pasien::factory(100)->create();
-        // \App\Models\mahasiswa1056::factory(100)->create();
-
-        // \App\Models\pasien::factory(100)->create();
-        // \App\Models\poli::factory(8)->create();
-        // \App\Models\daftar::factory(100)->create();
+        User::create([
+            'name' => 'user',
+            'email' => 'user@gmail.com',
+            'role' => 'user',
+            'password' => bcrypt('user'),
+        ]);
     }
 }

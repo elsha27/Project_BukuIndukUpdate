@@ -16,7 +16,7 @@ class GuruController extends Controller
     public function index()
     {
         $data['guru'] = guru::latest()->paginate(10);
-        return view('guru_index', $data);
+        return view('admin.guru_index', $data);
     }
 
     /**
@@ -24,7 +24,7 @@ class GuruController extends Controller
      */
     public function create()
     {
-        return view('guru_create');
+        return view('admin.guru_create');
     }
 
     /**
@@ -62,7 +62,7 @@ class GuruController extends Controller
         foreach ($fields as $field) {
             if ($request->hasFile($field)) {
                 // Simpan file baru
-                $guru->$field = $request->file($field)->store('public');
+                $guru->$field = $request->file($field)->store('guru','public');
             }
         }
         $guru->save();
@@ -80,7 +80,7 @@ class GuruController extends Controller
         $skGurus = $guru->sk;
 
         // Kirimkan data guru dan SK ke view
-        return view('guru_show', compact('guru', 'skGurus'));
+        return view('admin.guru_show', compact('guru', 'skGurus'));
     }
 
     /**
@@ -89,7 +89,7 @@ class GuruController extends Controller
     public function edit($id)
     {
         $data['guru'] = guru::findOrFail($id); //seperti mencari buku sesuai id di lemari
-        return view('guru_edit', $data);
+        return view('admin.guru_edit', $data);
     }
 
     /**
@@ -136,7 +136,7 @@ class GuruController extends Controller
         }
         $guru->save(); //menyimpan data ke database
         flash('Data sudah diupdate')->success();
-        return redirect('/guru');
+        return redirect()->route('guru.index');
     }
 
     /**
@@ -154,4 +154,12 @@ class GuruController extends Controller
         flash('Data sudah dihapus')->success();
         return back();
     }
+
+    public function showFoto($id)
+{
+    $guru = Guru::findOrFail($id);
+    return response()->file(storage_path('app/public/' . $guru->foto));
 }
+
+}
+

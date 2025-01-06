@@ -6,6 +6,7 @@ use App\Models\guru;
 use App\Models\siswa;
 use App\Models\rombel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorerombelRequest;
 use App\Http\Requests\UpdaterombelRequest;
 
@@ -18,7 +19,13 @@ class RombelController extends Controller
     {
         // Ambil semua data rombel dengan relasi guru
     $rombel = Rombel::with('guru')->paginate(10);
-    return view('rombel_index', compact('rombel'));
+    if (Auth::check()) {
+        if (Auth::user()->role == 'user') {
+            return view('user.rombel_index', compact('rombel'));
+        } elseif (Auth::user()->role == 'admin') {
+            return view('admin.rombel_index', compact('rombel'));
+        }
+    }
     }
 
     /**
@@ -30,7 +37,7 @@ class RombelController extends Controller
          $guru = guru::all(); // Ambil semua data rombel
  
          // Kirimkan data ke view
-         return view('rombel_create', compact('guru'));
+         return view('admin.rombel_create', compact('guru'));
     }
 
     /**
@@ -60,7 +67,13 @@ class RombelController extends Controller
     public function show($id)
     {
         $rombel = rombel::findOrFail($id);
-        return view('rombel_show', ['rombel' => $rombel]);
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
+                return view('user.rombel_show', ['rombel' => $rombel]);
+            } elseif (Auth::user()->role == 'admin') {
+                return view('admin.rombel_show', ['rombel' => $rombel]);
+            }
+        }
     }
 
     /**
@@ -72,7 +85,7 @@ class RombelController extends Controller
         $guru = guru::all(); // Ambil semua data rombel
         $rombel = Rombel::findOrFail($id);
         // Kirimkan data ke view
-        return view('rombel_edit', compact('rombel','guru'));
+        return view('admin.rombel_edit', compact('rombel','guru'));
         
     }
 
@@ -95,7 +108,7 @@ class RombelController extends Controller
         $rombel->fill($requestData);
         $rombel->save(); //menyimpan data ke database
         flash('Data sudah diupdate')->success();
-        return redirect('/rombel');
+        return redirect('/admin/rombel');
     }
 
     /**
