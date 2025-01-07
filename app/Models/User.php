@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function guru()
+{
+    return $this->hasOne(Guru::class); // Anggap 1 user hanya memiliki 1 guru
+}
 }

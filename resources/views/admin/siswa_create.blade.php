@@ -3,7 +3,7 @@
     <div class="card">
         <h5 class="card-header">Tambah Data Siswa</h5>
         <div class="card-body">
-            <form action="{{ route('siswa.store') }}" method="post" enctype="multipart/form-data" >
+            <form action="/admin/siswa" method="post" enctype="multipart/form-data" >
                 @csrf
                 <div class="form-group mt-1 mb-3">
                     <label for="foto">Foto Siswa (jpg, jpeg, png)</label>

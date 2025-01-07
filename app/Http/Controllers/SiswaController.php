@@ -113,7 +113,14 @@ class SiswaController extends Controller
 
         // Menampilkan pesan sukses dan mengarahkan kembali ke halaman sebelumnya
         flash('Data berhasil disimpan.')->success();
-        return redirect()->route('admin.siswa_index');
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
+                return redirect()->route('user.siswa_index');
+            } elseif (Auth::user()->role == 'admin') {
+                return redirect()->route('admin.siswa_index');
+            }
+        }
+        return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
     }
 
     /**
@@ -210,7 +217,6 @@ class SiswaController extends Controller
         $siswa->save(); //menyimpan data ke database
         flash('Data sudah diupdate')->success();
         return redirect()->route('siswa.index');
-
     }
 
     /**
@@ -218,10 +224,18 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        $siswa = siswa::findOrFail($id);
+        $siswa = Siswa::findOrFail($id);
+
+        // Periksa apakah siswa terkait dengan rombel
+        if ($siswa->rombel()->exists()) {
+            flash('Siswa tidak bisa dihapus karena sudah masuk dalam data rombel')->error();
+            return back(); // Kembali ke halaman sebelumnya dengan pesan error
+        }
+
+        // Jika siswa tidak terhubung dengan rombel, hapus data siswa
         $siswa->delete();
-        flash('Data sudah dihapus')->success();
-        return back();
+        flash('Siswa berhasil dihapus')->success();
+        return back(); // Kembali ke halaman sebelumnya dengan pesan sukses
     }
 
     public function import(Request $request)

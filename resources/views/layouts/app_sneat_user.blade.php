@@ -32,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/sneat/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" href="{{ asset('logo_sekolah.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -96,12 +96,14 @@
           </li>          
 
             <!-- Layouts -->
-            <li class="menu-item {{ request()->is('guru') ? 'active' : '' }}">
-              <a href="#" class="menu-link">
+            <li class="menu-item {{ request()->is('user/guru/show') || request()->is('user/guru/show/*') ? 'active' : '' }}">
+              <a href="/user/guru/show" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
                 <div data-i18n="Analytics">Data Saya</div>
               </a>
             </li>
+            
+
 
             <li class="menu-item {{ request()->is('user/siswa') || request()->is('user/siswa/*') ? 'active' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">

@@ -10,6 +10,7 @@ use App\Http\Controllers\RombelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaImportController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\SkGuruController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,6 +64,16 @@ Route::middleware(['auth','role:user'])->group(function(){
 
     Route::get('/user/rombel', [RombelController::class,'index'])->name('rombel.index');
     Route::get('/user/rombel/{id}/show', [RombelController::class,'show'])->name('rombel.show');
+
+    Route::get('/user/guru/show', [GuruController::class, 'showUser'])->name('guru.showUser');
+    Route::get('/user/guru/create', [GuruController::class,'create'])->name('guru.create');
+    Route::post('/user/guru', [GuruController::class,'store'])->name('guru.store');
+    Route::get('/user/guru/{id}/edit', [GuruController::class,'edit'])->name('guru.edit');
+    Route::put('/user/guru/{id}', [GuruController::class,'update'])->name('guru.update');
+
+    Route::get('/user/guru/createSK', [SkGuruController::class,'create'])->name('sk.create');
+    Route::post('/user/guru/createSK', [SkGuruController::class,'store'])->name('sk.store');
+    Route::delete('/user/guru/{id}', [SkGuruController::class,'destroy'])->name('sk.destroy');
 });
 
 // routes/web.php

@@ -37,14 +37,14 @@
                         <td>{{ $item->semester }}</td>
                         <td>{{ $item->tahun_ajaran }}</td>
                         <td>
-                            <a href="/rombel/{{ $item->id }}/edit" class="btn btn-warning btn-sm ml-2">Edit</a>
+                            {{-- <a href="/rombel/{{ $item->id }}/edit" class="btn btn-warning btn-sm ml-2">Edit</a>
                             <!-- link ke form siswa edit menyesuaikan id -->
-                            <form action="/rombel/{{ $item->id }}" method="POST" class="d-inline">
+                            <form action="/rombel/{{ $item->id }}" method="POST" class="d-inline"> --}}
                             <!-- form action sesuai dengan id yang diambil -->
                             <a href="user/rombel/{{ $item->id }}/show" class="btn btn-success btn-sm ml-2">Detail</a>
-                            @csrf
+                            {{-- @csrf
                             @method('delete')
-                            <button class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                            <button class="btn btn-danger btn-sm ml-2" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button> --}}
                             </form>
                         </td>
                     </tr>

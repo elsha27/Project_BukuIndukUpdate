@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use id;
 use App\Models\guru;
 use App\Models\sk_guru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Storesk_guruRequest;
 use App\Http\Requests\Updatesk_guruRequest;
@@ -26,9 +28,14 @@ class SkGuruController extends Controller
     {
         // Ambil semua data guru
         $guru = Guru::all();
+        $currentGuru = null;
 
         // Kirim data guru ke view
-        return view('sk_create', compact('guru'));
+        // return view('user.sk_create', compact('guru'));
+
+        $currentGuru = Guru::where('user_id', Auth::id())->first();
+        
+        return view('user.sk_create', compact('currentGuru'));
     }
 
     /**
@@ -38,7 +45,7 @@ class SkGuruController extends Controller
     {
         // Validasi data
         $requestData = $request->validate([
-            'nik' => 'required|exists:gurus,nik', // Pastikan 'nik' merujuk pada NIK guru
+            'nik' => 'nullable|exists:gurus,nik', // Pastikan 'nik' merujuk pada NIK guru
             'tahun' => 'required|numeric|digits:4|regex:/^20\d{2}$/', // Hanya menerima tahun dari 2000-2099
             'jenis_sk' => 'required|in:SK Yayasan,SK Tugas', // Pilihan terbatas
             'semester' => 'required|in:1,2', // Semester hanya 1 atau 2
@@ -80,7 +87,7 @@ class SkGuruController extends Controller
         flash('Data berhasil disimpan.')->success();
 
         // Redirect ke halaman lain
-        return redirect('/guru');
+        return redirect('/user/guru/show');
     }
 
     /**
@@ -125,6 +132,6 @@ class SkGuruController extends Controller
 
         // Notifikasi atau redirect
         flash('Data SK berhasil dihapus.')->success();
-        return redirect('/guru/show');  // Atau sesuaikan dengan rute yang Anda inginkan
+        return redirect('user/guru/show');  // Atau sesuaikan dengan rute yang Anda inginkan
     }
 }

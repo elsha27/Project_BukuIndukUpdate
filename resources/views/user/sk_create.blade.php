@@ -1,22 +1,15 @@
-@extends('layouts.app_sneat', ['title' => 'Tambah SK'])
+@extends('layouts.app_sneat_user', ['title' => 'Tambah SK'])
 @section('content')
     <div class="card">
         <h5 class="card-header">Tambah Data SK</h5>
         <div class="card-body">
-            <form action="/skguru" method="post" enctype="multipart/form-data" >
+            <form action="{{ route('sk.store') }}" method="post" enctype="multipart/form-data" >
                 @csrf
                 <div class="form-group mt-1 mb-3">
                     <label for="nik">Guru</label>
-                    <select name="nik" class="form-control select2" data-placeholder="Cari Guru....">
-                        <option value="">-- Pilih Guru --</option>
-                        @foreach ($guru as $item)
-                            <option value="{{ $item->nik }}" @selected(old('nik') == $item->nik)>
-                                {{ $item->nik }} - {{ $item->nama_guru }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <input type="text" name="nik" class="form-control" value="{{ $currentGuru->nik ?? 'Data tidak ditemukan' }}" readonly>
                     <span class="text-danger">{{ $errors->first('nik') }}</span>
-                </div>
+                </div>                
                 <div class="form-group mt-1 mb-3">
                     <label for="tahun">Tahun</label>
                     <input type="number" class="form-control @error('tahun') is-invalid @enderror" id="tahun"
