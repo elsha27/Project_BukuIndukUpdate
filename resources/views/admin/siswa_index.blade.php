@@ -40,7 +40,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->nisn }}</td>
-                            <td>{{ $item->tingkat_rombel }}</td>
+                            <td>{{ $item->rombel->nama_rombel }}</td> <!-- Menampilkan nama guru -->
                             <td>{{ $item->status }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
                             <td>

@@ -47,11 +47,18 @@
                     <span class="text-danger">{{ $errors->first('tanggal_lahir') }}</span>
                 </div>
                 <div class="form-group mt-1 mb-3">
-                    <label for="tingkat_rombel">tingkat_rombel</label>
-                    <input type="text" class="form-control @error('tingkat_rombel') is-invalid @enderror"
-                        id="tingkat_rombel" name="tingkat_rombel"
-                        value="{{ old('tingkat_rombel') ?? $siswa->tingkat_rombel }}" readonly>
-                    <span class="text-danger">{{ $errors->first('tingkat_rombel') }}</span>
+                    <label for="rombel_id">Nama Rombel
+                        <a href="/rombel/create" target="blank">Buat Rombel Baru</a>
+                    </label>
+                    <select name="rombel_id" class="form-control select2" data-placeholder="Cari Rombel....">
+                        <option value="">-- Pilih Rombel --</option>
+                        @foreach ($rombels as $item)
+                            <option value="{{ $item->id }}" @selected(old('rombel_id') == $item->id)>
+                                {{ $item->rombel_id }} - {{ $item->nama_rombel }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <span class="text-danger">{{ $errors->first('rombel_id') }}</span>
                 </div>
                 <div class="form-group mt-1 mb-3">
                     <label for="umur">Umur</label>

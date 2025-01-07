@@ -255,6 +255,26 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function confirmDelete() {
+          Swal.fire({
+              title: 'Apakah Anda yakin?',
+              text: "Data yang dihapus tidak dapat dikembalikan!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya, hapus!',
+              cancelButtonText: 'Batal'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Lakukan penghapusan data
+                  document.getElementById('deleteForm').submit();
+              }
+          });
+      }
+      </script>
     <script src="/sneat/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="/sneat/assets/vendor/libs/popper/popper.js"></script>
     <script src="/sneat/assets/vendor/js/bootstrap.js"></script>

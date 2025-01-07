@@ -156,12 +156,12 @@
                                             Tidak ada file
                                         @endif
                             
-                                        <!-- Tombol Delete -->
+                                        {{-- <!-- Tombol Delete -->
                                         <form action="{{ route('skguru.destroy', $sk->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus SK ini?')">Hapus</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

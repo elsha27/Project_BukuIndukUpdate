@@ -112,18 +112,7 @@ class GuruController extends Controller
         $skGurus = $guru->sk;
 
         // Kirimkan data guru dan SK ke view
-        if (Auth::check()) {
-            if (Auth::user()->role == 'user') {
-                // Ambil data guru berdasarkan ID dan pastikan user yang login adalah pemilik data tersebut
-                $guru = Guru::where('id', $id)
-                    ->where('user_id', Auth::id())  // Pastikan hanya data guru milik user yang login yang bisa ditampilkan
-                    ->firstOrFail();
-                return view('user.guru_show', compact('guru', 'skGurus'));
-            } elseif (Auth::user()->role == 'admin') {
-                return view('admin.guru_show', compact('guru', 'skGurus'));
-            }
-        }
-        return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
+        return view('admin.guru_show', compact('guru', 'skGurus'));
     }
 
     /**
@@ -160,7 +149,7 @@ class GuruController extends Controller
             'email' => 'required|email',
             'mapel' => 'required',
             'total_jtm' => 'required|numeric',
-            'status' => 'required | in:Aktif,Tidak Aktif',
+            // 'status' => 'required | in:Aktif,Tidak Aktif',
             'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:5000',
             'ijazah_sd' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
             'ijazah_smp' => 'nullable|file|mimes:pdf,doc,docx|max:5000',
@@ -190,7 +179,7 @@ class GuruController extends Controller
             if (Auth::user()->role == 'user') {
                 return redirect('/user/guru/show');
             } elseif (Auth::user()->role == 'admin') {
-                return view('admin.guru_index');
+                return redirect('/admin/guru');
             }
         }
         return redirect('/login');

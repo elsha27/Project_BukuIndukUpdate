@@ -37,15 +37,19 @@ class SiswaController extends Controller
      */
     public function create()
     {
+        $rombels = Rombel::all(); // Ambil semua data rombel
+
         if (Auth::check()) {
             if (Auth::user()->role == 'user') {
-                return view('user.siswa_create');
+                return view('user.siswa_create', compact('rombels'));
             } elseif (Auth::user()->role == 'admin') {
-                return view('admin.siswa_create');
+                return view('admin.siswa_create', compact('rombels'));
             }
         }
+
         return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -84,7 +88,7 @@ class SiswaController extends Controller
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'alamat' => 'nullable',
             'no_hp' => 'nullable',
-            'kebutuhan _khusus' => 'nullable',
+            'kebutuhan_khusus' => 'nullable',
             'disabilitas' => 'nullable',
             'nomor_kip' => 'nullable',
             'nama_ayah' => 'required',
@@ -117,7 +121,7 @@ class SiswaController extends Controller
             if (Auth::user()->role == 'user') {
                 return redirect()->route('user.siswa_index');
             } elseif (Auth::user()->role == 'admin') {
-                return redirect()->route('admin.siswa_index');
+                return redirect('/admin/siswa');
             }
         }
         return redirect('/login'); // Pengguna tidak terautentikasi, arahkan ke halaman login
@@ -170,7 +174,6 @@ class SiswaController extends Controller
             'nik' => 'required|unique:siswas,nik,' . $id,
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
-            'tingkat_rombel' => 'required',
             'umur' => 'required',
             'status' => 'nullable | in:Aktif,Nonaktif,Lulus,Pindah',
             'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
