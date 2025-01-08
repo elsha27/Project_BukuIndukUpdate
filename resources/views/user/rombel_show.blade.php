@@ -49,6 +49,9 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->nama }}</td> <!-- Menampilkan nama siswa -->
                                                 <td>{{ $item->nisn }}</td> <!-- Menampilkan NISN siswa -->
+                                                <td>
+                                                    <a href="/user/siswa/{{ $item->id }}/edit" class="btn btn-warning btn-sm ml-2">Edit</a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -19,8 +19,23 @@ class SiswaController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
+        // // Ambil query pencarian dari input
+        // $search = $request->input('search');
+
+        // // Query untuk mencari siswa berdasarkan nama, NISN, atau kelas
+        // $data['siswa'] = Siswa::when($search, function ($query, $search) {
+        //     $query->where('nama', 'like', "%{$search}%")
+        //         ->orWhere('nisn', 'like', "%{$search}%")
+        //         ->orWhereHas('rombel', function ($query) use ($search) {
+        //             $query->where('nama', 'like', "%{$search}%"); // Asumsikan kelas ada di relasi 'rombel'
+        //         });
+        // })->latest()->paginate(10);
+
+        // // Pastikan search tetap ada di query pagination
+        // $data['siswa']->appends(['search' => $search]);
+
         $data['siswa'] = siswa::latest()->paginate(10);
         if (Auth::check()) {
             if (Auth::user()->role == 'user') {

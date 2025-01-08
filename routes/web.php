@@ -44,7 +44,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/admin/siswa/{id}/edit', [SiswaController::class,'edit'])->name('siswa.edit');
     Route::put('/admin/siswa/{id}', [SiswaController::class,'update'])->name('siswa.update');
     Route::delete('/admin/siswa/{id}', [SiswaController::class,'destroy'])->name('siswa.destroy');
-    Route::post('siswaimport', [SiswaImportController::class, 'store'])->name('siswaimport.store');
+    // Route::post('siswaimport', [SiswaImportController::class, 'store'])->name('siswaimport.store');
 
     Route::get('/admin/rombel', [RombelController::class,'index'])->name('rombel.index');
     Route::get('/admin/rombel/create', [RombelController::class,'create'])->name('rombel.create');

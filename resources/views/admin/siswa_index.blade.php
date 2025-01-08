@@ -5,6 +5,13 @@
         <div class="card-body">
             <div class="row mb-3 mt-3">
                 <div class="col-md-12">
+                    {{-- <form method="GET" action="{{ route('siswa.index') }}" class="mb-3">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan nama, NISN, atau kelas" value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </div>
+                    </form> --}}
+                    
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="/admin/siswa/create" class="btn btn-primary">Tambah Siswa</a>
 

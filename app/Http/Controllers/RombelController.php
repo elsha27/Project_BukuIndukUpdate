@@ -69,7 +69,7 @@ class RombelController extends Controller
         $rombel = rombel::findOrFail($id);
         if (Auth::check()) {
             if (Auth::user()->role == 'user') {
-                return redirect('/user/guru/show', ['rombel' => $rombel]);
+                return view('user.rombel_show', ['rombel' => $rombel]);
             } elseif (Auth::user()->role == 'admin') {
                 return view('admin.rombel_show', ['rombel' => $rombel]);
             }
