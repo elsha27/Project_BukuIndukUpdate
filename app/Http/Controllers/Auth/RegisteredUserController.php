@@ -45,12 +45,12 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         // Logout user yang baru saja login
-        Auth::logout();
+        // Auth::logout();
 
         // Tambahkan pesan flash (jika Anda menggunakan package flash)
         session()->flash('success', 'Register berhasil! Silakan login.');
 
         // Redirect ke halaman login
-        return redirect()->route('login');
+        return redirect('/admin/user');
     }
 }

@@ -27,12 +27,12 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Login </title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/sneat/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" href="{{ asset('logo_sekolah.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -109,9 +109,9 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <x-input-label class="form-label" for="password" :value="__('Password')"/>
-                    <a href="auth-forgot-password-basic.html">
+                    {{-- <a href="{{ route('password.request') }}">
                       <small>Forgot Password?</small>
-                    </a>
+                    </a> --}}
                   </div>
                   <div class="input-group input-group-merge">
                     <x-text-input
@@ -132,12 +132,12 @@
                 </div>
               </form>
 
-              <p class="text-center">
+              {{-- <p class="text-center">
                 <span>New on our platform?</span>
                 <a href="{{ route('register') }}">
                   <span>Create an account</span>
                 </a>
-              </p>
+              </p> --}}
             </div>
           </div>
           <!-- /Register -->

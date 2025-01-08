@@ -10,7 +10,7 @@ class AddUserIdToGurusTable extends Migration
     {
         Schema::table('gurus', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable(); // Menambahkan kolom user_id
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Membuat foreign key ke tabel users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); // Membuat foreign key ke tabel users
         });
     }
 

@@ -18,7 +18,7 @@ class guru extends Model
         return $this->hasMany(Sk_guru::class, 'nik', 'nik'); // Menyesuaikan relasi dengan kolom nik
     }
     public function user()
-{
-    return $this->belongsTo(User::class); // Anggap 1 guru hanya memiliki 1 user
-}
+    {
+        return $this->belongsTo(User::class)->withDefault(); // Anggap 1 guru hanya memiliki 1 user
+    }
 }

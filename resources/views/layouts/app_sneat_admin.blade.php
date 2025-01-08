@@ -156,6 +156,12 @@
                 </li>
               </ul>
             </li>
+            <li class="menu-item {{ request()->is('admin/user') ? 'active' : '' }}">
+              <a href="/admin/user" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Analytics">Data User</div>
+              </a>
+            </li>
             
         </aside>
         <!-- / Menu -->

@@ -10,11 +10,12 @@ use App\Http\Controllers\RombelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaImportController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\SkGuruController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,6 +29,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/admin/dashboard', [AdminController::class,'dashboard']);
+    Route::get('/admin/user', [AdminController::class,'index'])->name('user.index');
+    Route::get('/admin/user/create', [RegisteredUserController::class,'create']);
+    Route::post('/admin/user', [RegisteredUserController::class,'store']);
+    Route::delete('/admin/user/{id}', [AdminController::class,'destroy']);
     Route::get('/admin/guru', [GuruController::class,'index'])->name('guru.index');
     Route::get('/admin/guru/create', [GuruController::class,'create'])->name('guru.create');
     Route::post('/admin/guru', [GuruController::class,'store'])->name('guru.store');
